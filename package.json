@@ -1,0 +1,31 @@
+{
+  "name": "food-delivery-nosql",
+  "version": "1.0.0",
+  "description": "Hệ thống quản lý ứng dụng giao đồ ăn trực tuyến - Demo NoSQL",
+  "main": "index.js",
+  "scripts": {
+    "seed:mongo":    "node seed/seed_mongo.js",
+    "seed:neo4j":    "node seed/seed_neo4j.js",
+    "seed:cassandra":"node seed/seed_cassandra.js",
+    "seed:all":      "npm run seed:mongo && npm run seed:neo4j && npm run seed:cassandra",
+    "demo:order-history":  "node src/mongo/order_history.js",
+    "demo:top-items":      "node src/mongo/top_items.js",
+    "demo:restaurant":     "node src/mongo/restaurant_query.js",
+    "demo:cart":           "node src/redis/cart_cache.js",
+    "demo:session":        "node src/redis/session_manager.js",
+    "demo:recommend":      "node src/neo4j/recommend.js",
+    "demo:graph":          "node src/neo4j/user_restaurant_graph.js",
+    "demo:cassandra":      "node src/cassandra/order_log.js",
+    "benchmark":           "node benchmark/run_benchmark.js",
+    "start":               "node index.js"
+  },
+  "dependencies": {
+    "mongodb":       "^6.5.0",
+    "redis":         "^4.6.13",
+    "neo4j-driver":  "^5.19.0",
+    "cassandra-driver": "^4.7.2",
+    "faker":         "^5.5.3",
+    "chalk":         "^4.1.2",
+    "dotenv":        "^16.4.5"
+  }
+}
