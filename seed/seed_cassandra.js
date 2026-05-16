@@ -65,7 +65,7 @@ CREATE TABLE IF NOT EXISTS item_popularity_monthly (
   year_month    TEXT,
   item_id       TEXT,
   item_name     TEXT,
-  sold_count    COUNTER,
+  sold_count    INT,
   PRIMARY KEY ((restaurant_id, year_month), item_id)
 );
 `;
