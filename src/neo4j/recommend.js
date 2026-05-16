@@ -59,11 +59,11 @@ async function getRecommendedItems(customerId, limit = 8) {
     return result.records.map(r => ({
       item_id:       r.get("item_id"),
       name:          r.get("name"),
-      price:         r.get("price").toNumber(),
+      price:         r.get("price").toNumber ? r.get("price").toNumber() : Number(r.get("price")),
       category:      r.get("category"),
-      total_ordered: r.get("totalOrdered").toNumber(),
-      from_users:    r.get("fromUsers").toNumber(),
-      score:         parseFloat(r.get("score").toFixed(2)),
+      total_ordered: r.get("totalOrdered").toNumber ? r.get("totalOrdered").toNumber() : Number(r.get("totalOrdered")),
+      from_users:    r.get("fromUsers").toNumber ? r.get("fromUsers").toNumber() : Number(r.get("fromUsers")),
+      score:         parseFloat(r.get("score")),
     }));
   } finally {
     await session.close();
@@ -102,8 +102,8 @@ async function getRecommendedRestaurants(customerId, limit = 5) {
       name:          r.get("name"),
       rating:        r.get("rating"),
       categories:    r.get("categories"),
-      total_visits:  r.get("totalVisits").toNumber(),
-      from_users:    r.get("fromUsers").toNumber(),
+      total_visits:  r.get("totalVisits").toNumber ? r.get("totalVisits").toNumber() : Number(r.get("totalVisits")),
+      from_users:    r.get("fromUsers").toNumber ? r.get("fromUsers").toNumber() : Number(r.get("fromUsers")),
     }));
   } finally {
     await session.close();
@@ -134,8 +134,8 @@ async function getSimilarUsers(customerId, limit = 5) {
     return result.records.map(r => ({
       customer_id: r.get("customer_id"),
       name:        r.get("name"),
-      shared:      r.get("sharedCount").toNumber(),
-      similarity:  parseFloat(r.get("similarity").toFixed(3)),
+      shared:      r.get("sharedCount").toNumber ? r.get("sharedCount").toNumber() : Number(r.get("sharedCount")),
+      similarity:  parseFloat(Number(r.get("similarity")).toFixed(3)),
     }));
   } finally {
     await session.close();
@@ -163,7 +163,7 @@ async function getFoodProfile(customerId) {
       favorite_categories: result.records[0]?.get("profile") || [],
       top_restaurants:     visitResult.records.map(r => ({
         name:   r.get("name"),
-        visits: r.get("times").toNumber(),
+        visits: r.get("times").toNumber ? r.get("times").toNumber() : Number(r.get("times")),
         spent:  r.get("spent"),
       })),
     };
@@ -186,7 +186,7 @@ async function getUserConnectionPath(userId1, userId2) {
 
     if (result.records.length === 0) return null;
     const r = result.records[0];
-    return { path: r.get("nodePath"), hops: r.get("hops").toNumber() };
+    return { path: r.get("nodePath"), hops: r.get("hops").toNumber ? r.get("hops").toNumber() : Number(r.get("hops")) };
   } finally {
     await session.close();
   }
